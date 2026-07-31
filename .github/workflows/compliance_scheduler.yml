@@ -1,0 +1,148 @@
+name: PRC Compliance Monitor
+
+# ---------------------------------------------------------------------------
+# Runs compliance_monitor.py on a schedule, commits the updated baseline back
+# to the repo (so figure-change detection actually works between runs) and
+# emails the markdown report to the compliance inbox.
+# ---------------------------------------------------------------------------
+
+on:
+  schedule:
+    # Every 3 days at 06:00 UTC (07:00 London in BST, 06:00 in GMT).
+    # NOTE: cron's */3 on day-of-month means days 1,4,7,...,28,31 and it RESETS
+    # each month - so the gap from the 31st to the 1st is 1 day, and from the
+    # 28th/29th to the 1st can be 2-4 days. It is "every 3 days" within a month,
+    # not a perfect 72-hour cycle. Use the alternative below if you need an
+    # exact interval.
+    - cron: '0 6 */3 * *'
+    # ALTERNATIVE (exact 72h gating): comment out the line above, uncomment the
+    # line below to run daily, and uncomment the "Check 72h elapsed" step.
+    # - cron: '0 6 * * *'
+  workflow_dispatch:
+    inputs:
+      force_email:
+        description: 'Email the report even if nothing changed'
+        type: boolean
+        required: false
+        default: false
+      skip_news:
+        description: 'Skip the PRC labour-law news watch (crawl only)'
+        type: boolean
+        required: false
+        default: false
+      extra_url:
+        description: 'Optional extra URL to crawl for this run only'
+        type: string
+        required: false
+        default: ''
+
+permissions:
+  contents: write        # needed to commit the updated baseline state back
+
+concurrency:
+  group: compliance-monitor
+  cancel-in-progress: false
+
+jobs:
+  monitor:
+    name: Crawl, compare and report
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Uncomment this block ONLY if you switched to the daily cron above.
+      # - name: Check 72h elapsed
+      #   id: gate
+      #   run: |
+      #     if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+      #       echo "run=true" >> "$GITHUB_OUTPUT"; exit 0
+      #     fi
+      #     if [ ! -f compliance_state.json ]; then
+      #       echo "run=true" >> "$GITHUB_OUTPUT"; exit 0
+      #     fi
+      #     LAST=$(python3 -c "import json;print(json.load(open('compliance_state.json')).get('last_run',''))")
+      #     if [ -z "$LAST" ]; then echo "run=true" >> "$GITHUB_OUTPUT"; exit 0; fi
+      #     LAST_TS=$(date -u -d "$LAST" +%s); NOW_TS=$(date -u +%s)
+      #     if [ $((NOW_TS - LAST_TS)) -ge 259200 ]; then
+      #       echo "run=true" >> "$GITHUB_OUTPUT"
+      #     else
+      #       echo "run=false" >> "$GITHUB_OUTPUT"
+      #       echo "Less than 72h since $LAST - skipping."
+      #     fi
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          else
+            pip install requests beautifulsoup4
+          fi
+          pip list
+
+      - name: Run compliance monitor
+        id: monitor
+        env:
+          # Repository secrets -> Settings > Secrets and variables > Actions
+          EMAIL_HOST_USER: ${{ secrets.EMAIL_HOST_USER }}
+          EMAIL_HOST_PASSWORD: ${{ secrets.EMAIL_HOST_PASSWORD }}
+          # Optional overrides. Set these as repo VARIABLES (not secrets) if you
+          # use a provider other than Gmail.
+          EMAIL_HOST: ${{ vars.EMAIL_HOST || 'smtp.gmail.com' }}
+          EMAIL_PORT: ${{ vars.EMAIL_PORT || '465' }}
+          EMAIL_USE_SSL: ${{ vars.EMAIL_USE_SSL || 'true' }}
+          EMAIL_FROM: ${{ vars.EMAIL_FROM }}
+          EMAIL_TO: ${{ vars.EMAIL_TO || 'jon@prcworkforce.com' }}
+          # Optional: enables a paid search backend in addition to Google News RSS.
+          SERPER_API_KEY: ${{ secrets.SERPER_API_KEY }}
+          SERPAPI_KEY: ${{ secrets.SERPAPI_KEY }}
+          PYTHONUNBUFFERED: '1'
+          # Inputs are passed through env, never interpolated into the shell,
+          # to avoid script injection via workflow_dispatch.
+          FORCE_EMAIL: ${{ inputs.force_email }}
+          SKIP_NEWS: ${{ inputs.skip_news }}
+          EXTRA_URL: ${{ inputs.extra_url }}
+        run: |
+          set -euo pipefail
+          ARGS=()
+          if [ "${FORCE_EMAIL:-false}" = "true" ]; then ARGS+=(--always-email); fi
+          if [ "${SKIP_NEWS:-false}" = "true" ]; then ARGS+=(--no-news); fi
+          if [ -n "${EXTRA_URL:-}" ]; then ARGS+=(--url "$EXTRA_URL"); fi
+          echo "Running: python compliance_monitor.py ${ARGS[*]:-}"
+          python compliance_monitor.py "${ARGS[@]}"
+
+      - name: Upload report artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: compliance-report-${{ github.run_number }}
+          path: |
+            reports/
+            compliance_state.json
+          retention-days: 90
+          if-no-files-found: warn
+
+      - name: Commit updated baseline and report
+        if: always()
+        run: |
+          git config user.name  "compliance-monitor[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A compliance_state.json reports/ 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No baseline or report changes to commit."
+          else
+            git commit -m "chore(compliance): update baseline and report [skip ci]"
+            # Rebase in case something else landed on the branch mid-run.
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" || true
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi
