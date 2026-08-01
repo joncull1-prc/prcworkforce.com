@@ -1,0 +1,52 @@
+name: Weekly Website Check
+
+# Runs the PRC Workforce site checker every Monday 07:00 UTC and commits the
+# refreshed report to reports/latest.md. Also runnable on demand from the
+# Actions tab (workflow_dispatch).
+
+on:
+  schedule:
+    - cron: "0 7 * * 1"      # Monday 07:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write            # needed to commit the updated report back
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4 feedparser
+
+      - name: Run website checker (and email the report)
+        env:
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+        run: python site_checker.py --url https://www.prcworkforce.com/ --max-pages 60 --email
+
+      - name: Upload report as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-check-report
+          path: reports/
+
+      - name: Commit refreshed report
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add reports/
+          git commit -m "Weekly site check $(date -u +%Y-%m-%d)" || echo "No changes to commit"
+          git push || echo "Nothing to push"
