@@ -33,7 +33,11 @@ async function start() {
 
   eyebrow.textContent = `Week ${context.week} of ${context.totalWeeks}, day ${context.week * 7}`;
   heading.textContent = `Week ${context.week} audit`;
-  behaviourLine.textContent = `Rate the past seven days for: ${context.behaviour}`;
+  // The behaviour is not stored, so it is not echoed here. Pointing at page 1
+  // keeps the referent fixed without the server ever holding the text.
+  behaviourLine.textContent =
+    'Rate the past seven days for the behaviour you wrote on page 1 of your ledger. '
+    + 'Open the ledger and read it before you answer.';
 
   const total = document.getElementById('total');
   const submit = document.getElementById('submit');

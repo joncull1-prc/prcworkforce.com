@@ -39,8 +39,14 @@ CREATE TABLE public.activation_tokens (
 --   phone_hmac    keyed hash for duplicate detection and inbound-SMS lookup.
 --                 An unkeyed hash of a phone number is trivially reversible:
 --                 the whole UK mobile space is about 10^9 candidates.
---   target_behaviour  the habit being discontinued. Without it the SRBAI items
---                 ("this action") have no referent and the scores are unusable.
+--
+-- What is deliberately NOT here: the behaviour being discontinued. The SRBAI
+-- items all refer to one action, so a fixed referent is essential to the
+-- measurement, but it does not have to live in this database to be fixed. The
+-- participant writes it on page 1 of their ledger and the weekly page points
+-- them back to it. Storing it instead would put free text about someone's
+-- drinking, vaping, scrolling or gambling next to their mobile number, which is
+-- more sensitive than every other column here combined.
 -- ---------------------------------------------------------------------------
 CREATE TABLE public.participant_sessions (
     id                UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -49,8 +55,6 @@ CREATE TABLE public.participant_sessions (
                       REFERENCES public.activation_tokens(token_hmac),
     phone_hmac        CHAR(64)    NOT NULL,
     encrypted_phone   TEXT        NOT NULL,
-    target_behaviour  TEXT        NOT NULL
-                      CHECK (char_length(target_behaviour) BETWEEN 3 AND 120),
     baseline_score    SMALLINT    NOT NULL CHECK (baseline_score BETWEEN 4 AND 28),
     dispatch_week     SMALLINT    NOT NULL DEFAULT 0
                       CHECK (dispatch_week BETWEEN 0 AND 13),

@@ -1,7 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  ValidationError, validatePhone, validateScores, validateWeek, validateBehaviour, validateCode,
+  ValidationError, validatePhone, validateScores, validateWeek,
+  validateBehaviourDeclared, validateCode,
 } from '../src/validate.js';
 
 test('a UK mobile in any common shape is accepted and normalised', () => {
@@ -47,13 +48,13 @@ test('week numbers outside the protocol window are refused', () => {
   }
 });
 
-test('the target behaviour is required, trimmed and stripped of control characters', () => {
-  assert.equal(validateBehaviour('  checking   my  phone in bed '), 'checking my phone in bed');
-  assert.equal(validateBehaviour('vaping at my desk'), 'vaping at my desk');
-  assert.equal(validateBehaviour('a\u0007bc\tde'), 'a bc de');
-  assert.throws(() => validateBehaviour('ab'), ValidationError);
-  assert.throws(() => validateBehaviour('x'.repeat(121)), ValidationError);
-  assert.throws(() => validateBehaviour(undefined), ValidationError);
+test('the behaviour must be declared as written, and only a boolean is accepted', () => {
+  assert.equal(validateBehaviourDeclared(true), true);
+  // Anything truthy but not exactly true is refused, so the text of a habit
+  // cannot be smuggled through this field into the store.
+  for (const bad of ['checking my phone in bed', 'true', 1, {}, [], false, undefined, null]) {
+    assert.throws(() => validateBehaviourDeclared(bad), ValidationError);
+  }
 });
 
 test('activation codes must be the printed length', () => {

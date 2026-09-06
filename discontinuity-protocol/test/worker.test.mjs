@@ -46,7 +46,6 @@ const SESSION = {
   phone_hmac: 'e'.repeat(64),
   // Encrypted under ENCRYPTION_KEY with token_hmac as additional data, filled in below.
   encrypted_phone: null,
-  target_behaviour: 'checking my phone in bed',
   baseline_score: 24,
   dispatch_week: 5,
   is_graduated: false,
@@ -90,7 +89,7 @@ const post = (path, body) => new Request(`https://protocol.example.com${path}`, 
 const goodActivation = {
   code: 'X7K9P2M4RT',
   phone: '+447700900123',
-  behaviour: 'checking my phone in bed',
+  behaviourRecorded: true,
   scores: [7, 6, 6, 5],
   consent: true,
 };
@@ -324,7 +323,7 @@ test('a finished protocol accepts nothing further', async () => {
   } finally { stub.restore(); }
 });
 
-test('pulse context returns the behaviour so the page asks about the right thing', async () => {
+test('pulse context gives the page its week without ever holding the behaviour', async () => {
   const stub = installFetch([['participant_sessions', { body: [SESSION] }]]);
   try {
     const query = await signedQuery(6);
@@ -333,8 +332,42 @@ test('pulse context returns the behaviour so the page asks about the right thing
     );
     assert.equal(response.status, 200);
     const data = await response.json();
-    assert.equal(data.behaviour, 'checking my phone in bed');
     assert.equal(data.week, 6);
+    assert.equal(data.baseline, 24);
+    assert.equal(data.totalWeeks, 13);
+    // The page points at page 1 of the ledger instead, so nothing about the
+    // participant's private life travels over the wire or sits in the store.
+    assert.equal('behaviour' in data, false);
+  } finally { stub.restore(); }
+});
+
+test('activation is refused unless the behaviour is confirmed as written down', async () => {
+  const stub = installFetch([]);
+  try {
+    const { behaviourRecorded, ...withoutDeclaration } = goodActivation;
+    const response = await worker.fetch(post('/api/activate', withoutDeclaration), makeEnv());
+    assert.equal(response.status, 400);
+    assert.match((await response.json()).error, /page 1 of your ledger/);
+    assert.equal(stub.calls.length, 0);
+  } finally { stub.restore(); }
+});
+
+test('the habit text cannot be smuggled into the record through any field', async () => {
+  const stub = installFetch([
+    ['dispatch_week=lt.13', { body: [] }],
+    ['claim_activation_token', { body: [{ id: 'token-id' }] }],
+    ['participant_sessions', { body: [SESSION] }],
+    ['srbai_logs', { body: null, status: 201 }],
+  ]);
+  try {
+    await worker.fetch(post('/api/activate', {
+      ...goodActivation,
+      behaviour: 'vaping at my desk',
+      target_behaviour: 'vaping at my desk',
+      notes: 'vaping at my desk',
+    }), makeEnv());
+    const written = stub.calls.filter((c) => c.method === 'POST' && c.body).map((c) => c.body).join(' ');
+    assert.ok(!written.includes('vaping'), 'no free text about the habit may reach the store');
   } finally { stub.restore(); }
 });
 

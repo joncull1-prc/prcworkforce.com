@@ -18,6 +18,10 @@ form.addEventListener('submit', async (event) => {
   // activations, the second of which reports the code as already used.
   if (submit.disabled) return;
 
+  if (!document.getElementById('behaviourRecorded').checked) {
+    show(message, 'Write the behaviour on page 1 of your ledger first, then tick the box.', 'error');
+    return;
+  }
   if (!document.getElementById('consent').checked) {
     show(message, 'Tick the consent box before starting.', 'error');
     return;
@@ -29,7 +33,7 @@ form.addEventListener('submit', async (event) => {
   const { ok, data } = await postJson('/api/activate', {
     code: document.getElementById('code').value,
     phone: document.getElementById('phone').value,
-    behaviour: document.getElementById('behaviour').value,
+    behaviourRecorded: true,
     scores: readScores(),
     consent: true,
   });
@@ -46,9 +50,9 @@ form.addEventListener('submit', async (event) => {
     : 'We could not send the confirmation text. Your protocol is running. Contact us if the first audit link does not arrive.';
   show(
     message,
-    `Protocol running. Day 0 automaticity: ${data.baseline} of 28 for "${data.behaviour}". `
+    `Protocol running. Day 0 automaticity: ${data.baseline} of 28. `
       + `Your first weekly audit link arrives Sunday at 18:00. ${smsLine} `
-      + 'Write your Day 0 score on page 21 of the ledger.',
+      + 'Write your Day 0 score on page 21 of the ledger, next to the behaviour on page 1.',
     'ok',
   );
 });

@@ -23,7 +23,7 @@ import {
 } from './protocol.js';
 import {
   ValidationError, readJson, validatePhone, validateScores,
-  validateBehaviour, validateCode,
+  validateBehaviourDeclared, validateCode,
 } from './validate.js';
 import {
   json, problem, tooManyRequests, throttleCheck, throttleRecord,
@@ -137,7 +137,7 @@ async function handleActivate(request, env, settings, reference) {
   const body = await readJson(request);
   const code = validateCode(normaliseCode(body.code ?? body.token ?? ''), ACTIVATION_CODE_LENGTH);
   const phone = validatePhone(body.phone, env.ALLOWED_DIAL_PREFIXES);
-  const behaviour = validateBehaviour(body.behaviour);
+  validateBehaviourDeclared(body.behaviourRecorded);
   const scores = validateScores(body.scores);
   if (body.consent !== true) {
     return problem(400, 'Tick the box to confirm you agree to receive the weekly audit texts.');
@@ -174,7 +174,6 @@ async function handleActivate(request, env, settings, reference) {
           token_hmac: tokenHmac,
           phone_hmac: phoneHmac,
           encrypted_phone: encrypted,
-          target_behaviour: behaviour,
           baseline_score: baseline,
         }, env);
       } catch (error) {
@@ -193,7 +192,6 @@ async function handleActivate(request, env, settings, reference) {
     return json({
       ok: true,
       baseline,
-      behaviour,
       smsDelivered: delivery.sent === true,
       nextAudit: 'Sunday 18:00',
     });
@@ -211,10 +209,11 @@ async function handlePulseContext(url, env, settings) {
   if (!authorised) return problem(403, 'That link is not valid or has expired.');
   const { session, week } = authorised;
   if (session.is_graduated) return problem(410, 'This protocol is already complete.');
+  // No behaviour is returned, because none is stored. The page points the
+  // participant back to page 1 of their ledger instead.
   return json({
     ok: true,
     week,
-    behaviour: session.target_behaviour,
     baseline: session.baseline_score,
     totalWeeks: settings.weeks,
   });

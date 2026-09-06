@@ -43,7 +43,7 @@ export function isConflict(error) {
 }
 
 const SESSION_FIELDS =
-  'id,public_code,token_hmac,phone_hmac,encrypted_phone,target_behaviour,baseline_score,'
+  'id,public_code,token_hmac,phone_hmac,encrypted_phone,baseline_score,'
   + 'dispatch_week,is_graduated,sms_opted_out,started_at';
 
 /**

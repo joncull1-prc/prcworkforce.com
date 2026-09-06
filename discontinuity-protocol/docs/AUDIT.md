@@ -98,7 +98,7 @@ a test that keeps the weekly message inside two segments.
 | 23 | Graduation needed two logs at or below 8, with no check that they were consecutive weeks and no minimum week. A participant could complete a ninety-day protocol in a fortnight. | High |
 | 24 | `current_week` advanced when the text was *sent*, not by elapsed time. Someone activating on a Saturday was asked for a week-two reading the next evening, one day in. A missed week advanced the counter anyway, so the readings no longer matched the weeks. | High |
 | 25 | The cron was `0 18 * * SUN`. Cloudflare cron is UTC. For the seven months of British Summer Time the message arrives at 19:00 while its own text says 18:00. | Medium |
-| 26 | **No target behaviour was ever captured.** All four items ask about "this action" and nothing named it. Four numbers about an unnamed thing measure nothing, and a participant thinking about a different behaviour each week produces a trend line that looks like progress and is noise. This is the largest single hole in the 1.0 design, and it is a product hole, not a code one. | Critical |
+| 26 | **No target behaviour was ever captured or referred to anywhere.** All four items ask about "this action" and nothing named it, on screen or on paper. Four numbers about an unnamed thing measure nothing, and a participant thinking about a different behaviour each week produces a trend line that looks like progress and is noise. This is the largest single hole in the 1.0 design, and it is a product hole, not a code one. | Critical |
 | 27 | The weekly page abbreviated the items ("Done automatically?") while the baseline page used full wording. The baseline and the weekly readings were therefore not answers to the same questions. | High |
 | 28 | Twelve weeks is 84 days. The product is called 90-day. | Medium |
 | 29 | The magic link hardcoded `protocol.disruptor.com`, which appears nowhere else in the build. | Medium |
@@ -107,8 +107,9 @@ a test that keeps the weekly message inside two segments.
 Fixed by: graduation requires three consecutive weeks at or below the threshold
 and not before week 8; dispatch week derived from elapsed time with no backlog
 sent; two UTC cron hours with a `Europe/London` gate so only the real 18:00
-fires; a required, validated `target_behaviour` restated on every weekly page and
-in the ledger; identical full item wording in both places and in `protocol.js`;
+fires; a behaviour that is written on page 1 of the ledger, confirmed at
+activation and restated in the participant's own hand on every weekly spread,
+without the text ever reaching the store; identical full item wording in both places and in `protocol.js`;
 13 weeks across 91 days stated consistently everywhere; the origin from
 configuration; explicit copy about which direction the number should move.
 
@@ -201,7 +202,7 @@ re-reading it as an opponent would.
 
 Stated plainly, because a fix list that claims completeness is its own defect.
 
-- **Not deployed and not run against live services.** The 67 tests cover pure
+- **Not deployed and not run against live services.** The 69 tests cover pure
   logic, cryptography, validation and the Worker's routes with Supabase and
   Twilio stubbed. Nothing here has run against a real Supabase, Twilio or
   Cloudflare account.
@@ -224,7 +225,11 @@ Stated plainly, because a fix list that claims completeness is its own defect.
   published article.** It is the lowest-confidence factual claim in the build,
   and it is the same class of error this audit criticises in the draft. See
   [`CONFIDENCE-AND-RISK.md`](CONFIDENCE-AND-RISK.md) Part 1.
-- **Storing the target behaviour is a trade, not a clear win.** It fixes the
-  measurement, and it adds free text about someone's private life to a store
-  that otherwise holds only a number and fourteen scores. Part 2 of
-  [`CONFIDENCE-AND-RISK.md`](CONFIDENCE-AND-RISK.md) sets out a better option.
+- **The behaviour is fixed on paper, not in the database.** An earlier pass of
+  this rebuild made it a required stored field, which fixed the measurement and
+  added free text about someone's private life to a store that otherwise holds a
+  mobile number and fourteen sets of four numbers. It is now a declaration:
+  the participant writes it on page 1, ticks to confirm, and every weekly page
+  points them back to it. A test asserts that no habit text can reach the store
+  through any field. The reasoning is in Part 2 of
+  [`CONFIDENCE-AND-RISK.md`](CONFIDENCE-AND-RISK.md).

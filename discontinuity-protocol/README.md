@@ -11,6 +11,7 @@ SRHI (Verplanken and Orbell, 2003). A **falling** score is the goal.
 - [`docs/AUDIT.md`](docs/AUDIT.md) — every defect found in the 1.0 draft and what changed.
 - [`docs/MARKET-STRESS-TEST.md`](docs/MARKET-STRESS-TEST.md) — where this loses to the market and what to do about it.
 - [`docs/CONFIDENCE-AND-RISK.md`](docs/CONFIDENCE-AND-RISK.md) — how far to trust each finding, the case for the original design, and a launch pre-mortem.
+- [`docs/PILOT-PROTOCOL.md`](docs/PILOT-PROTOCOL.md) — twenty people and no printed book, before you commit to a print run.
 - [`print/LEDGER_SPECS.md`](print/LEDGER_SPECS.md) — the print specification, corrected.
 
 ## Layout
@@ -25,15 +26,17 @@ src/twilio.js      SMS dispatch and TwiML
 db/schema.sql      tables, constraints, RLS, atomic token claim, erasure
 public/            three pages, one stylesheet, three modules, nothing third-party
 scripts/           activation-code generator
-test/              67 tests, including a stubbed end-to-end suite
+test/              69 tests, including a stubbed end-to-end suite
 ```
 
 ## How it runs
 
 1. A ledger carries one printed ten-character code under a scratch-off panel.
-2. The participant enters the code, a UK mobile, **the behaviour they are
-   discontinuing**, and four Day 0 scores. The code is claimed atomically and
-   cannot be reused.
+2. The participant writes **the behaviour they are discontinuing** on page 1 of
+   the ledger, then enters the code, a UK mobile and four Day 0 scores. The
+   behaviour itself is never typed in and never stored: the server receives only
+   a confirmation that it has been written down, and every weekly page points
+   back to page 1. The code is claimed atomically and cannot be reused.
 3. Every Sunday at 18:00 London the cron works out which week each participant is
    actually due from elapsed time, reserves the send, and texts a signed link
    that expires in nine days.
@@ -133,10 +136,10 @@ is what Supabase gets. Both are gitignored; check before committing anyway.
       A weekly job with no heartbeat is one you hear about from a customer.
 - [ ] Two offline copies of `TOKEN_PEPPER` and `ENCRYPTION_KEY`, held by two
       people. See **Key custody** above.
-- [ ] Run about twenty people through the software with a PDF and twenty codes
-      before committing to a print run. It costs a fortnight and settles the
-      three numbers the product rests on: activation rate, drop-off curve and
-      the achievable threshold.
+- [ ] Run the pilot in [`docs/PILOT-PROTOCOL.md`](docs/PILOT-PROTOCOL.md) before
+      committing to a print run. Two weeks of technical shakedown, then thirteen
+      weeks with twenty people and a PDF ledger. It settles the drop-off curve
+      and the achievable threshold, which no amount of engineering can.
 
 ## Tests
 
@@ -144,9 +147,9 @@ is what Supabase gets. Both are gitignored; check before committing anyway.
 npm test
 ```
 
-Sixty-seven tests. Thirty-seven cover the protocol rules, the cryptography and
+Sixty-nine tests. Thirty-six cover the protocol rules, the cryptography and
 the input validation, including Twilio's own published signature vector.
-Thirty drive the Worker end to end with Supabase and Twilio stubbed at the
+Thirty-three drive the Worker end to end with Supabase and Twilio stubbed at the
 fetch boundary, and assert the negatives that matter: that a bare session
 identifier buys nothing, that a rejected activation does not burn a printed
 code, that a forged webhook writes nothing, that an upstream error message never

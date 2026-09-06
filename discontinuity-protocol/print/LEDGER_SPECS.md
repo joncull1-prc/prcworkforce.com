@@ -129,7 +129,7 @@ section sewing. Arithmetic is shown so it can be re-checked against any change.
 
 | Pages | Count | Content |
 |---|---|---|
-| 1 | 1 | Title, protocol registration, ledger number |
+| 1 | 1 | Title, ledger number, and the behaviour declaration panel (see 3.3) |
 | 2 | 1 | Colophon, manufacturer, compliance block |
 | 3–6 | 4 | How the protocol works, and what it does not claim |
 | 7–8 | 2 | Evidence notes and references |
@@ -153,13 +153,39 @@ it. Section 8 explains how the number was resolved.
 
 Repeated thirteen times, pages 23–100.
 
-- **Page 1**: the week ahead. The named behaviour restated at the top of every
-  single week, so the participant is always rating the same thing. Cue
-  conditions expected this week. One environmental change to make.
+- **Page 1**: the week ahead. A ruled line at the top reading "The behaviour
+  (copy from page 1)", so the participant restates it in their own hand every
+  single week and is always rating the same thing. Cue conditions expected this
+  week. One environmental change to make.
 - **Pages 2–5**: seven daily lines, one per day, plus one spare. Each line has a
   slot for occurrences, the strongest cue, and what was done instead.
 - **Page 6**: the weekly audit. The four items printed in full with a 1 to 7
   scale, a total box, and a plot point on the running graph.
+
+### 3.3 The behaviour declaration panel, page 1
+
+A boxed panel, at least 60 mm wide by 25 mm deep, ruled, headed:
+
+> **The behaviour I am discontinuing.** Write one behaviour, and be specific.
+> "Checking my phone within five minutes of waking", not "phone use". Every
+> question in this ledger, for the next thirteen weeks, refers to what you write
+> here. Do not change it.
+
+Beneath it, in smaller type:
+
+> We never ask you to type this into the website and we do not hold it. It stays
+> in this book.
+
+This panel is the only place the behaviour exists. The software deliberately does
+not store it: the four automaticity items all refer to one action, so the
+referent has to be fixed, but fixing it does not require a database to hold free
+text about someone's drinking, vaping, scrolling or gambling next to their mobile
+number. The weekly audit page online points the participant back to this panel
+instead.
+
+Consequence for the design of every weekly spread: the line "copy from page 1" is
+not decoration. It is what keeps the measurement honest, and it must appear on
+all thirteen spreads without exception.
 
 ### 3.2 On 90 days versus 13 weeks
 

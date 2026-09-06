@@ -157,9 +157,20 @@ sensitive than everything else in the row combined.
    week, and gives up nothing except the convenience of seeing it on screen.
 
 Option 3 is a genuine improvement over what I built, and it came out of arguing
-for the draft rather than against it. It is a small change: make
-`target_behaviour` optional, default the page copy to the page-1 wording, and
-let the participant fill it in only if they want it echoed back.
+for the draft rather than against it.
+
+**This is now what the build does.** The `target_behaviour` column is gone. The
+activation page asks the participant to write the behaviour on page 1 and tick to
+confirm; only that boolean reaches the server. Every weekly page says "rate the
+behaviour you wrote on page 1 of your ledger", and every weekly spread in the
+printed book carries a "copy from page 1" line so it is restated in their own
+hand thirteen times. A test asserts that no habit text can reach the store
+through any field, including one named `behaviour`.
+
+The measurement discipline is fully preserved: the referent is fixed, restated
+weekly, and identical at Day 0 and Day 91. What is given up is the convenience of
+seeing it echoed on screen. What is gained is that the database never holds a
+sentence about anyone's drinking, vaping, scrolling or gambling.
 
 ### Where the draft has no defence
 

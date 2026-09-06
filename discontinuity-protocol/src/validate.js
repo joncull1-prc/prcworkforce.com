@@ -17,8 +17,6 @@ export class ValidationError extends Error {
   }
 }
 
-const CONTROL_CHARS = /[\u0000-\u001F\u007F]/g;
-
 /** Strict E.164, with an operator-controlled allowlist of dialling prefixes. */
 export function validatePhone(raw, allowedPrefixes) {
   if (typeof raw !== 'string') throw new ValidationError('Enter a mobile number.');
@@ -63,20 +61,25 @@ export function validateWeek(raw, maxWeek) {
 }
 
 /**
- * The behaviour being discontinued. The SRBAI items all refer to "this action";
- * without a named referent the four scores measure nothing in particular, and
- * a participant rating a different behaviour each week produces a trend line
- * that looks like progress and is actually noise.
+ * Confirmation that the behaviour has been written in the ledger.
+ *
+ * The SRBAI items all refer to one action, so the referent must be fixed before
+ * the first reading is taken. Fixing it does not require storing it: the
+ * participant writes it on page 1, confirms they have done so, and every weekly
+ * page points them back to that page. What reaches the server is a boolean.
+ *
+ * This is a deliberate trade. Storing the text would let the weekly page echo it
+ * back, which is a small convenience. It would also put free text about
+ * someone's private life next to their mobile number, which is more sensitive
+ * than everything else on the record combined.
  */
-export function validateBehaviour(raw) {
-  if (typeof raw !== 'string') throw new ValidationError('Name the behaviour you are discontinuing.');
-  // Replace control characters with a space rather than deleting them, so a
-  // stripped character cannot silently weld two words together.
-  const trimmed = raw.replace(CONTROL_CHARS, ' ').trim().replace(/\s+/g, ' ');
-  if (trimmed.length < 3 || trimmed.length > 120) {
-    throw new ValidationError('Describe the behaviour in 3 to 120 characters.');
+export function validateBehaviourDeclared(raw) {
+  if (raw !== true) {
+    throw new ValidationError(
+      'Write the behaviour on page 1 of your ledger, then tick the box to confirm.',
+    );
   }
-  return trimmed;
+  return true;
 }
 
 export function validateCode(normalised, expectedLength) {
