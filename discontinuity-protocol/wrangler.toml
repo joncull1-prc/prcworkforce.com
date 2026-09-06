@@ -42,6 +42,12 @@ DISPATCH_LOCAL_HOUR = "18"
 DISPATCH_TIMEZONE = "Europe/London"
 SUPPORT_EMAIL = "protocol@prcworkforce.com"
 
+# Optional. Any endpoint that accepts a JSON POST: an email relay, a chat
+# webhook, an uptime service. The weekly job reports to it every run, so a silent
+# failure reaches a person in days rather than when a participant emails to ask
+# where their link went. Leave unset to disable.
+# ALERT_WEBHOOK_URL = "https://..." 
+
 # Rate limiting, replay defence and inbound-SMS dedupe.
 # Create with: npx wrangler kv namespace create THROTTLE
 [[kv_namespaces]]

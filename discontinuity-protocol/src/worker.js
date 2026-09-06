@@ -68,6 +68,27 @@ function configErrors(env) {
   return errors;
 }
 
+/**
+ * Weekly heartbeat.
+ *
+ * A scheduled job with no heartbeat is a job you find out about from a
+ * customer. This posts one line to an operator-chosen endpoint after every run,
+ * successful or not, so a silent failure surfaces in days rather than weeks.
+ * Optional, and it can never break the run: any failure to report is swallowed.
+ */
+async function heartbeat(env, payload) {
+  if (!env.ALERT_WEBHOOK_URL) return;
+  try {
+    await fetch(env.ALERT_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ service: 'discontinuity-protocol', at: new Date().toISOString(), ...payload }),
+    });
+  } catch (error) {
+    console.error(JSON.stringify({ event: 'heartbeat.failed', message: error?.message }));
+  }
+}
+
 function logError(reference, route, error) {
   console.error(JSON.stringify({
     event: 'request.failed', reference, route,
@@ -366,6 +387,7 @@ export default {
     const errors = configErrors(env);
     if (errors.length > 0) {
       console.error(JSON.stringify({ event: 'cron.config_invalid', errors }));
+      await heartbeat(env, { status: 'config_invalid', issues: errors.length });
       return;
     }
 
@@ -430,6 +452,11 @@ export default {
       }
     }
 
-    console.log(JSON.stringify({ event: 'cron.complete', considered: sessions.length, sent, skipped }));
+    const failed = sessions.length - sent - skipped;
+    console.log(JSON.stringify({ event: 'cron.complete', considered: sessions.length, sent, skipped, failed }));
+    await heartbeat(env, {
+      status: failed > 0 ? 'completed_with_failures' : 'ok',
+      considered: sessions.length, sent, skipped, failed,
+    });
   },
 };

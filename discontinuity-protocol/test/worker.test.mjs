@@ -492,3 +492,44 @@ test('a failed send advances the week instead of stranding the participant', asy
     assert.equal(confirms.length, 0);
   } finally { stub.restore(); }
 });
+
+test('the weekly job reports to the heartbeat endpoint on every run', async () => {
+  const env = makeEnv({ ALERT_WEBHOOK_URL: 'https://alerts.example.com/hook' });
+  let page = 0;
+  const stub = installFetch([
+    ['alerts.example.com', { body: { ok: true } }],
+    ['participant_sessions?is_graduated', () => ({ body: page++ === 0 ? [] : [] })],
+  ]);
+  try {
+    await worker.scheduled({ scheduledTime: Date.parse('2026-07-05T17:00:00Z') }, env);
+    const beat = stub.calls.find((c) => c.url.includes('alerts.example.com'));
+    assert.ok(beat, 'a run with nothing to do must still report');
+    const body = JSON.parse(beat.body);
+    assert.equal(body.status, 'ok');
+    assert.equal(body.service, 'discontinuity-protocol');
+  } finally { stub.restore(); }
+});
+
+test('a heartbeat endpoint that is down cannot break the weekly run', async () => {
+  const env = makeEnv({ ALERT_WEBHOOK_URL: 'https://alerts.example.com/hook' });
+  const original = globalThis.fetch;
+  globalThis.fetch = async (input) => {
+    const url = typeof input === 'string' ? input : input.url;
+    if (url.includes('alerts.example.com')) throw new Error('alerting is down');
+    return new Response('[]', { status: 200 });
+  };
+  try {
+    await worker.scheduled({ scheduledTime: Date.parse('2026-07-05T17:00:00Z') }, env);
+  } finally { globalThis.fetch = original; }
+});
+
+test('a misconfigured Worker raises the alarm instead of failing quietly', async () => {
+  const env = makeEnv({ ALERT_WEBHOOK_URL: 'https://alerts.example.com/hook', ENCRYPTION_KEY: undefined });
+  const stub = installFetch([['alerts.example.com', { body: { ok: true } }]]);
+  try {
+    await worker.scheduled({ scheduledTime: Date.parse('2026-07-05T17:00:00Z') }, env);
+    const beat = stub.calls.find((c) => c.url.includes('alerts.example.com'));
+    assert.ok(beat);
+    assert.equal(JSON.parse(beat.body).status, 'config_invalid');
+  } finally { stub.restore(); }
+});

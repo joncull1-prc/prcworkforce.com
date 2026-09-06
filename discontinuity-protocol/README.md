@@ -10,6 +10,7 @@ SRHI (Verplanken and Orbell, 2003). A **falling** score is the goal.
 
 - [`docs/AUDIT.md`](docs/AUDIT.md) — every defect found in the 1.0 draft and what changed.
 - [`docs/MARKET-STRESS-TEST.md`](docs/MARKET-STRESS-TEST.md) — where this loses to the market and what to do about it.
+- [`docs/CONFIDENCE-AND-RISK.md`](docs/CONFIDENCE-AND-RISK.md) — how far to trust each finding, the case for the original design, and a launch pre-mortem.
 - [`print/LEDGER_SPECS.md`](print/LEDGER_SPECS.md) — the print specification, corrected.
 
 ## Layout
@@ -24,7 +25,7 @@ src/twilio.js      SMS dispatch and TwiML
 db/schema.sql      tables, constraints, RLS, atomic token claim, erasure
 public/            three pages, one stylesheet, three modules, nothing third-party
 scripts/           activation-code generator
-test/              64 tests, including a stubbed end-to-end suite
+test/              67 tests, including a stubbed end-to-end suite
 ```
 
 ## How it runs
@@ -78,8 +79,27 @@ Point the Twilio number's inbound message webhook at
 `https://<your-origin>/api/sms/inbound` (HTTP POST). The URL must match
 `PUBLIC_ORIGIN` exactly, because that is what the signature is checked against.
 
-**`TOKEN_PEPPER` must never change once ledgers are printed.** Every printed code
-in every batch stops working the moment it does.
+### Key custody
+
+Read this before printing anything. Two of the seven secrets have no recovery
+path, and losing either is the only failure in this system that cannot be fixed
+afterwards.
+
+- **`TOKEN_PEPPER`.** Change it or lose it and every code in every printed batch
+  stops working at once. The database holds hashes, and the clear codes were
+  destroyed after the print run exactly as the process instructs. There is no
+  way back.
+- **`ENCRYPTION_KEY`.** Lose it and no stored mobile number can be decrypted, so
+  nobody can be texted again. The protocol stops dead for every participant
+  simultaneously, mid-cohort.
+
+The control costs nothing and takes ten minutes: **before the first print run,
+write both values down and hold two independent offline copies with two
+different people.** Do this on the day they are generated, not later.
+
+The other five secrets can be rotated at any time. Rotating `LINK_SIGNING_KEY`
+invalidates audit links already in flight, so do it just after a Sunday send
+rather than just before one.
 
 Generate a batch:
 
@@ -109,6 +129,14 @@ is what Supabase gets. Both are gitignored; check before committing anyway.
 - [ ] Have the privacy notice reviewed and every placeholder filled.
 - [ ] Set `GRADUATION_THRESHOLD` from pilot data and publish the definition
       before the cohort starts.
+- [ ] Set `ALERT_WEBHOOK_URL`, then confirm a heartbeat arrives after a run.
+      A weekly job with no heartbeat is one you hear about from a customer.
+- [ ] Two offline copies of `TOKEN_PEPPER` and `ENCRYPTION_KEY`, held by two
+      people. See **Key custody** above.
+- [ ] Run about twenty people through the software with a PDF and twenty codes
+      before committing to a print run. It costs a fortnight and settles the
+      three numbers the product rests on: activation rate, drop-off curve and
+      the achievable threshold.
 
 ## Tests
 
@@ -116,9 +144,9 @@ is what Supabase gets. Both are gitignored; check before committing anyway.
 npm test
 ```
 
-Sixty-four tests. Thirty-seven cover the protocol rules, the cryptography and
+Sixty-seven tests. Thirty-seven cover the protocol rules, the cryptography and
 the input validation, including Twilio's own published signature vector.
-Twenty-seven drive the Worker end to end with Supabase and Twilio stubbed at the
+Thirty drive the Worker end to end with Supabase and Twilio stubbed at the
 fetch boundary, and assert the negatives that matter: that a bare session
 identifier buys nothing, that a rejected activation does not burn a printed
 code, that a forged webhook writes nothing, that an upstream error message never

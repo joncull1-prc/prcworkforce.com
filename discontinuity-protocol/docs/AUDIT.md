@@ -201,7 +201,7 @@ re-reading it as an opponent would.
 
 Stated plainly, because a fix list that claims completeness is its own defect.
 
-- **Not deployed and not run against live services.** The 64 tests cover pure
+- **Not deployed and not run against live services.** The 67 tests cover pure
   logic, cryptography, validation and the Worker's routes with Supabase and
   Twilio stubbed. Nothing here has run against a real Supabase, Twilio or
   Cloudflare account.
@@ -220,3 +220,11 @@ Stated plainly, because a fix list that claims completeness is its own defect.
   source of truth for any of them.
 - **The exit threshold is unvalidated.** 8 out of 28 is inherited from the draft.
   It should be set from pilot data, not from a round number.
+- **The exact wording of the fourth SRBAI item needs checking against the
+  published article.** It is the lowest-confidence factual claim in the build,
+  and it is the same class of error this audit criticises in the draft. See
+  [`CONFIDENCE-AND-RISK.md`](CONFIDENCE-AND-RISK.md) Part 1.
+- **Storing the target behaviour is a trade, not a clear win.** It fixes the
+  measurement, and it adds free text about someone's private life to a store
+  that otherwise holds only a number and fourteen scores. Part 2 of
+  [`CONFIDENCE-AND-RISK.md`](CONFIDENCE-AND-RISK.md) sets out a better option.
