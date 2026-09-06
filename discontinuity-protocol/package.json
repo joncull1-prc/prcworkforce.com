@@ -1,0 +1,20 @@
+{
+  "name": "discontinuity-protocol",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Un-gimmicked 90-day habit-discontinuation protocol: Cloudflare Worker backend, Supabase store, SMS pulse dispatch, and A5 print ledger spec.",
+  "type": "module",
+  "main": "src/worker.js",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "tail": "wrangler tail",
+    "test": "node --test test/*.test.mjs",
+    "tokens": "node scripts/generate-tokens.mjs"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}

@@ -1,0 +1,53 @@
+# Discontinuity Protocol — Cloudflare Worker configuration
+#
+# SECRETS ARE NEVER STORED IN THIS FILE. This file is committed to git; anything
+# in [vars] is public, is bundled into the Worker, and is readable by anyone with
+# read access to the repo or the Cloudflare dashboard.
+#
+# Set every secret with:  npx wrangler secret put <NAME>
+# Required secrets:  SUPABASE_SERVICE_KEY  TWILIO_ACCOUNT_SID  TWILIO_AUTH_TOKEN
+#                    ENCRYPTION_KEY  PHONE_PEPPER  TOKEN_PEPPER  LINK_SIGNING_KEY
+# For local dev put the same names in .dev.vars (gitignored). See .dev.vars.example.
+
+name = "discontinuity-protocol"
+main = "src/worker.js"
+compatibility_date = "2026-09-01"
+workers_dev = false
+
+# Static site. NOTE: this must be [assets] with an explicit binding, not the
+# legacy [site] bucket. [site] exposes __STATIC_CONTENT and does NOT create
+# env.ASSETS, so a [site] config with env.ASSETS.fetch() throws on every page load.
+[assets]
+directory = "./public"
+binding = "ASSETS"
+not_found_handling = "404-page"
+
+# Weekly pulse dispatch. Cloudflare cron is UTC-only, so both candidate hours are
+# registered and the handler dispatches only on the one that is 18:00 in
+# Europe/London. 17:00 UTC = 18:00 BST (summer); 18:00 UTC = 18:00 GMT (winter).
+[triggers]
+crons = ["0 17 * * 0", "0 18 * * 0"]
+
+# Non-secret configuration only.
+[vars]
+SUPABASE_URL = "https://your-project.supabase.co"
+TWILIO_PHONE_NUMBER = "+447000000000"
+PUBLIC_ORIGIN = "https://protocol.prcworkforce.com"
+ALLOWED_DIAL_PREFIXES = "+44"
+PROTOCOL_WEEKS = "13"
+GRADUATION_THRESHOLD = "8"
+GRADUATION_CONSECUTIVE_WEEKS = "3"
+GRADUATION_MIN_WEEK = "8"
+DISPATCH_LOCAL_HOUR = "18"
+DISPATCH_TIMEZONE = "Europe/London"
+SUPPORT_EMAIL = "protocol@prcworkforce.com"
+
+# Rate limiting, replay defence and inbound-SMS dedupe.
+# Create with: npx wrangler kv namespace create THROTTLE
+[[kv_namespaces]]
+binding = "THROTTLE"
+id = "replace-with-your-kv-namespace-id"
+preview_id = "replace-with-your-preview-kv-namespace-id"
+
+[observability]
+enabled = true

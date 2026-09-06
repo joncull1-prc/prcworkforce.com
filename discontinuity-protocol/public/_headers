@@ -1,0 +1,14 @@
+# Static assets are served straight from the asset layer, ahead of the Worker,
+# so these headers cannot be set in worker.js for those paths. The pages also
+# carry a CSP meta tag; both are kept, because a header covers responses a meta
+# tag cannot and the meta tag survives if this file is ever mislaid.
+/*
+  Referrer-Policy: no-referrer
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Cross-Origin-Opener-Policy: same-origin
+  Permissions-Policy: geolocation=(), camera=(), microphone=(), interest-cohort=()
+
+/*.html
+  Content-Security-Policy: default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
+  Cache-Control: no-store

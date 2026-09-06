@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex, nofollow">
+<meta http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
+<title>Discontinuity Protocol | Day 0 Baseline</title>
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<main>
+  <div class="card">
+    <p class="eyebrow">PRC Discontinuity Protocol</p>
+    <h1>Day 0 baseline</h1>
+    <p class="note">
+      This records the strength of the habit you are about to interrupt. It takes about a minute
+      and you do it once.
+    </p>
+
+    <form id="activation" novalidate>
+      <hr class="rule">
+
+      <div class="field">
+        <label for="code">Activation code, printed on page 1 of your ledger</label>
+        <input id="code" name="code" type="text" inputmode="latin" autocomplete="off"
+               spellcheck="false" maxlength="16" placeholder="X7K9P2M4RT" required>
+        <p class="hint">Ten characters. Case and spacing do not matter.</p>
+      </div>
+
+      <div class="field">
+        <label for="phone">UK mobile number</label>
+        <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel"
+               maxlength="20" placeholder="+447700900123" required>
+        <p class="hint">
+          Used only to send your weekly audit link. Stored encrypted. No name, no email,
+          no address is collected.
+        </p>
+      </div>
+
+      <div class="field">
+        <label for="behaviour">The behaviour you are discontinuing</label>
+        <input id="behaviour" name="behaviour" type="text" maxlength="120"
+               placeholder="checking my phone within five minutes of waking" required>
+        <p class="hint">
+          Be specific and name one behaviour. Every question below refers to this one thing,
+          and every week you will be asked about the same thing.
+        </p>
+      </div>
+
+      <h2>Automaticity, four items</h2>
+      <p class="note">
+        Rate each statement from 1, strongly disagree, to 7, strongly agree.
+        <strong>A high score here is expected and useful.</strong> It means the habit is strongly
+        automatic, which is what you have come to change. The number should fall over the
+        thirteen weeks, not rise.
+      </p>
+
+      <div id="items"></div>
+
+      <div class="total">
+        <span>Day 0 automaticity</span>
+        <output id="total" for="q1 q2 q3 q4">16 of 28</output>
+      </div>
+      <p class="hint">Range 4 to 28. The exit threshold for this protocol is 8 or below.</p>
+
+      <div class="consent">
+        <input id="consent" type="checkbox" required>
+        <label for="consent">
+          I agree to receive one audit text a week for thirteen weeks, and I have read the
+          <a href="/privacy.html">privacy notice</a>. I can reply STOP at any time, or DELETE to
+          erase my record.
+        </label>
+      </div>
+
+      <button id="submit" type="submit">Start the protocol</button>
+      <p id="message" class="message" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+  <footer>
+    PRC Behavioural Operations UK Ltd, Leek, Staffordshire Moorlands ST13.
+    <a href="/privacy.html">Privacy</a>
+  </footer>
+</main>
+<script type="module" src="/activate.js"></script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex, nofollow">
+<meta http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
+<title>Discontinuity Protocol | Weekly Audit</title>
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<main>
+  <div class="card">
+    <p class="eyebrow" id="eyebrow">PRC Discontinuity Protocol</p>
+    <h1 id="heading">Weekly audit</h1>
+    <p class="note" id="behaviour">Checking your link.</p>
+
+    <form id="pulse" novalidate hidden>
+      <hr class="rule">
+      <p class="note">
+        Rate each statement from 1, strongly disagree, to 7, strongly agree, for that one
+        behaviour over the past seven days. Answer as it was, not as you wish it had been.
+        A bad week recorded honestly is worth more than a good week invented.
+      </p>
+
+      <div id="items"></div>
+
+      <div class="total">
+        <span>This week</span>
+        <output id="total" for="q1 q2 q3 q4">16 of 28</output>
+      </div>
+
+      <button id="submit" type="submit">Record week</button>
+    </form>
+    <p id="message" class="message" role="status" aria-live="polite"></p>
+  </div>
+  <footer>
+    Reply STOP to end texts, DELETE to erase your record.
+    <a href="/privacy.html">Privacy</a>
+  </footer>
+</main>
+<script type="module" src="/pulse.js"></script>
+</body>
+</html>
