@@ -126,6 +126,10 @@ Every date and time stated to Jon is UK local time.
 - Repository artefacts are UTC and stay UTC in their own files.
   `reports/latest.md` timestamps and the `site_check.yml` cron schedule are
   both UTC. Quote them as UTC and add the UK equivalent when discussing them.
+- The weekly site check cron is `0 7 * * 1`, Monday 07:00 UTC. In UK local
+  terms that is **Monday 08:00 BST** while summer time is in force and
+  **Monday 07:00 GMT** in winter. The cron is fixed in UTC, so the UK local
+  run time moves by an hour at each clock change.
 - Date format is `19 Aug 2026`. Never `8/19/26`.
 - If the applicable offset is genuinely unclear, for example a date near a
   clock change, say so rather than guess.
@@ -142,8 +146,21 @@ Every date and time stated to Jon is UK local time.
   clinical, licensed, accredited, practitioner or specialist.
 - Default length: as short as the answer allows. Tables for comparisons,
   numbered steps for procedures, prose only when the reasoning matters.
+- The full voice rules live in this repository and are the single source of
+  truth for all PRC-facing copy:
+  - `voice/banned-words.md`: the banned list, the replacement table and the
+    five permitted exceptions.
+  - `voice/style-rules.md`: UK English, Americanisms to remove, punctuation,
+    numbers and money, banned register, sentence discipline.
+  - `voice/prc-facts.md`: naming, delivery, pricing, credibility limits, the
+    fixed disclaimer and the known conflicts to flag rather than resolve.
 - For any PRC-facing copy, run `prc-voice-guard` before it ships and return
   its CLEANED, CHANGED, FLAGS structure.
+- If the skill does not load in a session, read the three files above and
+  apply them directly, including the CLEANED, CHANGED, FLAGS output. A
+  missing skill is never a reason to ship unchecked copy.
+- Where the skill's own copy and the repository copy disagree, the
+  repository wins.
 
 ## 8. Applied frameworks
 
