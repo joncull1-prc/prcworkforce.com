@@ -1,20 +1,20 @@
 # PRC Workforce — Website Check
 
-*Generated 05 Oct 2026 15:20 UTC · target: https://www.prcworkforce.com/*
+*Generated 12 Oct 2026 16:11 UTC · target: https://www.prcworkforce.com/*
 
 ## Summary
 
 | Metric | Value |
 | --- | --- |
-| Pages crawled | 17 |
-| Pages OK | 17 |
+| Pages crawled | 19 |
+| Pages OK | 19 |
 | Pages failed | 0 |
 | Broken links (genuine) | 2 |
 | Links to verify manually (bot-blocked) | 17 |
 | Flagship inconsistencies | 2 |
-| Stats to verify | 40 |
-| Missing meta descriptions | 7 |
-| UK HR news items | 6 |
+| Stats to verify | 54 |
+| Missing meta descriptions | 8 |
+| UK HR news items | 7 |
 
 **Status: ACTION REQUIRED**
 
@@ -25,29 +25,29 @@ These returned 404/410/5xx or did not resolve (`status 0`). Fix or remove.
 | Link | Status | Found on |
 | --- | --- | --- |
 | https://www.mckinsey.com/mhi/our-insights/addressing-employee-burnout-are-you-solving-the-right-problem | 0 | https://www.prcworkforce.com/demo/demo.html<br>https://www.prcworkforce.com/demo/demo.html?full=1 |
-| https://www.oxfordeconomics.com/resource/the-cost-of-brain-drain | 502 | https://www.prcworkforce.com<br>https://www.prcworkforce.com/value.html |
+| https://grouprisk.org.uk/2026/09/02/in-over-a-third-38-of-businesses-employee-benefits-take-up-is-left-to-the-employees-to-initiate-themselves | 404 | https://www.prcworkforce.com |
 
 **Links to verify manually** — these returned 403/429, which usually means the site blocks automated checkers, *not* that the link is dead. Open each in a browser to confirm.
 
 | Link | Status | Found on |
 | --- | --- | --- |
-| https://pubmed.ncbi.nlm.nih.gov/31573916 | 403 | https://www.prcworkforce.com |
 | https://employeebenefits.co.uk/group-risk/highlighting-the-value-added-benefits-of-group-risk-products/281451.article | 403 | https://www.prcworkforce.com |
-| https://www.cipd.org/globalassets/media/knowledge/knowledge-hub/reports/2026-pdfs/9075-reward-survey-report-web-new.pdf | 403 | https://www.prcworkforce.com |
-| https://www.thelancet.com/journals/lanpsy/article/PIIS2215-0366(18)30162-7/fulltext | 403 | https://www.prcworkforce.com |
-| https://www.eapa.org.uk/wp-content/uploads/2024/07/UK-EAPA-Securing-the-future-of-the-EAP-Report-2024.pdf | 403 | https://www.prcworkforce.com<br>https://www.prcworkforce.com/brief<br>https://www.prcworkforce.com/demo/demo.html<br>(+2 more) |
 | https://www.mind.org.uk/information-support/guides-to-support-and-services/insurance-cover-and-mental-health/getting-the-right-insurance | 403 | https://www.prcworkforce.com |
+| https://www.cipd.org/globalassets/media/knowledge/knowledge-hub/reports/2026-pdfs/9075-reward-survey-report-web-new.pdf | 403 | https://www.prcworkforce.com |
+| https://pubmed.ncbi.nlm.nih.gov/31573916 | 403 | https://www.prcworkforce.com |
+| https://www.thelancet.com/journals/lanpsy/article/PIIS2215-0366(18)30162-7/fulltext | 403 | https://www.prcworkforce.com |
 | https://doi.org/10.1002/ejsp.674 | 403 | https://www.prcworkforce.com<br>https://www.prcworkforce.com/brief<br>https://www.prcworkforce.com/evidence.html<br>(+1 more) |
 | https://www.cipd.org/en/about/press-releases/one-in-four-workers-say-work-has-negative-impact-on-their-health-cipd | 403 | https://www.prcworkforce.com<br>https://www.prcworkforce.com/demo/demo.html<br>https://www.prcworkforce.com/demo/demo.html?full=1 |
+| https://www.eapa.org.uk/wp-content/uploads/2024/07/UK-EAPA-Securing-the-future-of-the-EAP-Report-2024.pdf | 403 | https://www.prcworkforce.com<br>https://www.prcworkforce.com/brief<br>https://www.prcworkforce.com/demo/demo.html<br>(+2 more) |
+| https://pubmed.ncbi.nlm.nih.gov/11176545 | 403 | https://www.prcworkforce.com/specimen-report-150.html<br>https://www.prcworkforce.com/specimen-report.html |
+| https://journals.sagepub.com/doi/10.2307/2666999 | 403 | https://www.prcworkforce.com/specimen-report-150.html<br>https://www.prcworkforce.com/specimen-report.html |
+| https://pubmed.ncbi.nlm.nih.gov/12625231 | 403 | https://www.prcworkforce.com/specimen-report-150.html<br>https://www.prcworkforce.com/specimen-report.html |
+| https://pubmed.ncbi.nlm.nih.gov/22853629 | 403 | https://www.prcworkforce.com/specimen-report-150.html<br>https://www.prcworkforce.com/specimen-report.html |
+| https://journals.sagepub.com/doi/10.1177/0013164405282471 | 403 | https://www.prcworkforce.com/specimen-report-150.html<br>https://www.prcworkforce.com/specimen-report.html |
+| https://www.cipd.org/globalassets/media/knowledge/knowledge-hub/reports/2025-pdfs/8868-good-work-index-2025-report-web1.pdf | 403 | https://www.prcworkforce.com/demo/demo.html<br>https://www.prcworkforce.com/demo/demo.html?full=1 |
 | https://onlinelibrary.wiley.com/doi/full/10.1111/1748-8583.12547 | 403 | https://www.prcworkforce.com/brief |
 | https://doi.org/10.1111/joop.12540 | 403 | https://www.prcworkforce.com/brief<br>https://www.prcworkforce.com/evidence.html |
 | https://www.glassdoor.com/blog/most-important-employer-branding-statistics | 403 | https://www.prcworkforce.com/value.html |
-| https://journals.sagepub.com/doi/10.1177/0013164405282471 | 403 | https://www.prcworkforce.com/specimen-report.html |
-| https://journals.sagepub.com/doi/10.2307/2666999 | 403 | https://www.prcworkforce.com/specimen-report.html |
-| https://pubmed.ncbi.nlm.nih.gov/11176545 | 403 | https://www.prcworkforce.com/specimen-report.html |
-| https://pubmed.ncbi.nlm.nih.gov/22853629 | 403 | https://www.prcworkforce.com/specimen-report.html |
-| https://pubmed.ncbi.nlm.nih.gov/12625231 | 403 | https://www.prcworkforce.com/specimen-report.html |
-| https://www.cipd.org/globalassets/media/knowledge/knowledge-hub/reports/2025-pdfs/8868-good-work-index-2025-report-web1.pdf | 403 | https://www.prcworkforce.com/demo/demo.html<br>https://www.prcworkforce.com/demo/demo.html?full=1 |
 
 ## 2. Flagship consistency
 
@@ -120,18 +120,32 @@ Claims about people or businesses stated with a percentage or big number and **n
   — https://www.prcworkforce.com
 - "When amending their benefits, 43% of large employers (250 or more staff) with objectives for their package use internal data to check usage and effectiveness, against 14% of smaller employers."
   — https://www.prcworkforce.com
+- "SECTION 1 The usage figure 9% of the people who replied used any employer-provided support in the last twelve months Where the 9 per cent comes from 460 invited Everyone on site was invited, by work email or by poster and payslip slip."
+  — https://www.prcworkforce.com/specimen-report.html
+- "SECTION 2 The three-way split Used any of it 9% Knew of some, used none 71% Did not know any of it existed 20% One in five of the people you are paying to cover does not know any of it is there."
+  — https://www.prcworkforce.com/specimen-report.html
+- "Yes 54% Roughly 26% No 20% Ninety six people said yes, 46 roughly, 36 no."
+  — https://www.prcworkforce.com/specimen-report.html
+- "Main reason Share People What fixes it Who owns it Concerned it would change how I am seen at work 31% 50 A way in that does not go through the line manager."
+  — https://www.prcworkforce.com/specimen-report.html
+- "The rest is the model Did not know any of it existed 22% 36 Change how you tell people."
+  — https://www.prcworkforce.com/specimen-report.html
+- "Read it carefully: these people are turning down a conversation, not turning down help The model Not confident a record of it would stay private 6% 9 Say where records are held, who can see them and how long they are kept."
+  — https://www.prcworkforce.com/specimen-report.html
+- "8 mean self-rated performance, 0 to 10 22% rated own performance 5 or below 29% missed at least one day in four weeks 6% missed four days or more Absence is the number you already hold."
+  — https://www.prcworkforce.com/specimen-report.html
+- "None 60% A few days 25% About half the days 8% Most days 4% Every day I worked 3% One hundred and seven people said none, 44 a few days, 15 about half, 7 most days and 5 every day."
+  — https://www.prcworkforce.com/specimen-report.html
+- "SECTION 9 Where the gap sits Work pattern Share of respondents People Did not know any of it existed People Mostly on site 32% 57 14% 8 Hybrid 27% 48 15% 7 Mostly remote 24% 42 14% 6 Shift or field based 17% 31 48% 15 Why use of the scheme is not split here."
+  — https://www.prcworkforce.com/specimen-report.html
+- "Time with you Share of respondents People Did not know any of it existed People Likely to use it, 7 to 10 People Under 1 year 19% 34 21% 7 18% 6 1 to 3 years 29% 52 21% 11 17% 9 4 to 10 years 31% 56 20% 11 16% 9 More than 10 years 20% 36 19% 7 17% 6 Why a flat table is printed."
+  — https://www.prcworkforce.com/specimen-report.html
 - "EAPA UK, 2024 Awareness gap 27% Of UK employees knew their EAP existed, despite 79% of employers offering one."
   — https://www.prcworkforce.com/brief
 - "UK EAP utilisation has shifted from averages of around 4% to more than 10% of the workforce."
   — https://www.prcworkforce.com/brief
 - "79% of employers provide an EAP; only 27% of employees know one exists."
   — https://www.prcworkforce.com/brief
-- "EAP awareness gap 27% Of UK employees knew their EAP existed, despite 79% of employers offering one."
-  — https://www.prcworkforce.com/due-diligence.html
-- "Same answer the long way round: 400 × 12% = 48 people used it."
-  — https://www.prcworkforce.com/due-diligence.html
-- "The 12% was measured on the 75 people who answered."
-  — https://www.prcworkforce.com/due-diligence.html
 - "One senior professional £10,500 Lost output from one £70k employee at 70% capacity for six months."
   — https://www.prcworkforce.com/value.html
 - "The figures below use a 250-employee organisation with 10% of the workforce carrying an active pattern as the worked example."
@@ -152,37 +166,46 @@ Claims about people or businesses stated with a percentage or big number and **n
   — https://www.prcworkforce.com/value.html
 - "Employer brand · job clicks +20% More job clicks following a 0."
   — https://www.prcworkforce.com/value.html
+- "EAP awareness gap 27% Of UK employees knew their EAP existed, despite 79% of employers offering one."
+  — https://www.prcworkforce.com/due-diligence.html
+- "Same answer the long way round: 400 × 12% = 48 people used it."
+  — https://www.prcworkforce.com/due-diligence.html
+- "The 12% was measured on the 75 people who answered."
+  — https://www.prcworkforce.com/due-diligence.html
 - "The reference calculation used publicly by PRC, one employee on £70,000 operating at 70% capacity for six months representing roughly £10,500 in lost output, is illustrative and is not a measured outcome of this or any cohort."
   — https://www.prcworkforce.com/PRC_Employer_Report_DEMO.html
-- "SECTION 2 The three-way split Used any of it 9% Knew of some, used none 71% Did not know any of it existed 20% One in five of the people you are paying to cover does not know any of it is there."
-  — https://www.prcworkforce.com/specimen-report.html
-- "Yes 54% Roughly 26% No 20% Ninety six people said yes, 46 roughly, 36 no."
-  — https://www.prcworkforce.com/specimen-report.html
-- "Main reason Share People What fixes it Who owns it Concerned it would change how I am seen at work 31% 50 A way in that does not go through the line manager."
-  — https://www.prcworkforce.com/specimen-report.html
-- "The rest is the model Did not know any of it existed 22% 36 Change how you tell people."
-  — https://www.prcworkforce.com/specimen-report.html
-- "Read it carefully: these people are turning down a conversation, not turning down help The model Not confident a record of it would stay private 6% 9 Say where records are held, who can see them and how long they are kept."
-  — https://www.prcworkforce.com/specimen-report.html
-- "8 mean self-rated performance, 0 to 10 22% rated own performance 5 or below 29% missed at least one day in four weeks 6% missed four days or more Absence is the number you already hold."
-  — https://www.prcworkforce.com/specimen-report.html
-- "None 60% A few days 25% About half the days 8% Most days 4% Every day I worked 3% One hundred and seven people said none, 44 a few days, 15 about half, 7 most days and 5 every day."
-  — https://www.prcworkforce.com/specimen-report.html
-- "SECTION 9 Where the gap sits Work pattern Share of respondents People Did not know any of it existed People Mostly on site 32% 57 14% 8 Hybrid 27% 48 15% 7 Mostly remote 24% 42 14% 6 Shift or field based 17% 31 48% 15 Why use of the scheme is not split here."
-  — https://www.prcworkforce.com/specimen-report.html
-- "Time with you Share of respondents People Did not know any of it existed People Likely to use it, 7 to 10 People Under 1 year 19% 34 21% 7 18% 6 1 to 3 years 29% 52 21% 11 17% 9 4 to 10 years 31% 56 20% 11 16% 9 More than 10 years 20% 36 19% 7 17% 6 Why a flat table is printed."
-  — https://www.prcworkforce.com/specimen-report.html
+- "9% of the people who replied used any of the support on offer in the last twelve months."
+  — https://www.prcworkforce.com/specimen-summary.html
+- "SECTION 1 The usage figure 10% of the people who replied used any employer-provided support in the last twelve months Where the 10 per cent comes from 480 invited Everyone on site was invited, by work email or by poster and payslip slip."
+  — https://www.prcworkforce.com/specimen-report-150.html
+- "SECTION 2 The three-way split Used any of it 10% Knew of some, used none 70% Did not know any of it existed 20% Fifteen people used it."
+  — https://www.prcworkforce.com/specimen-report-150.html
+- "Yes 53% Roughly 27% No 20% Eighty people said yes, 40 roughly, 30 no."
+  — https://www.prcworkforce.com/specimen-report-150.html
+- "Main reason Share People What fixes it Who owns it Concerned it would change how I am seen at work 31% 42 A way in that does not go through the line manager."
+  — https://www.prcworkforce.com/specimen-report-150.html
+- "The rest is the model Did not know any of it existed 22% 30 Change how you tell people."
+  — https://www.prcworkforce.com/specimen-report-150.html
+- "Read it carefully: these people are turning down a conversation, not turning down help The model Not confident a record of it would stay private 6% 8 Say where records are held, who can see them and how long they are kept."
+  — https://www.prcworkforce.com/specimen-report-150.html
+- "7 mean self-rated performance, 0 to 10 23% rated own performance 5 or below 30% missed at least one day in four weeks 7% missed four days or more Absence is the number you already hold."
+  — https://www.prcworkforce.com/specimen-report-150.html
+- "None 60% A few days 25% About half the days 8% Most days 4% Every day I worked 3% Ninety people said none, 37 a few days, 12 about half, 6 most days and 5 every day."
+  — https://www.prcworkforce.com/specimen-report-150.html
+
+_(+4 more.)_
 
 ## 4. Page-quality issues
 
-**Pages with no meta description** (7):
+**Pages with no meta description** (8):
 
-- https://www.prcworkforce.com/reporting-methodology.html
-- https://www.prcworkforce.com/PRC_Employer_Report_DEMO.html
 - https://www.prcworkforce.com/specimen-report.html
-- https://www.prcworkforce.com/fixed.html
 - https://www.prcworkforce.com/demo/demo.html
-- https://www.prcworkforce.com/reach-calculator.html
+- https://www.prcworkforce.com/fixed.html
+- https://www.prcworkforce.com/reporting-methodology.html
+- https://www.prcworkforce.com/usage-calculator.html
+- https://www.prcworkforce.com/PRC_Employer_Report_DEMO.html
+- https://www.prcworkforce.com/specimen-report-150.html
 - https://www.prcworkforce.com/demo/demo.html?full=1
 
 **Thin pages (under 120 words)** (2):
@@ -199,37 +222,41 @@ Claims about people or businesses stated with a percentage or big number and **n
 
 Recent UK items (previous 14 days), UK-scoped so it stays on your market. Open the link to read the source.
 
+- **[12 Oct 2026]** Major boost for young people in Exeter as Youth Hub opens to support them towards work  
+  GOV.UK — DWP news — https://www.gov.uk/government/news/major-boost-for-young-people-in-exeter-as-youth-hub-opens-to-support-them-towards-work
+- **[09 Oct 2026]** Keep Britain Working review update: a national growth opportunity, September 2026  
+  GOV.UK — Business & Trade news — https://www.gov.uk/government/publications/keep-britain-working-review-update-a-national-growth-opportunity-september-2026
+- **[09 Oct 2026]** Keep Britain Working review update: a national growth opportunity, September 2026  
+  GOV.UK — DWP news — https://www.gov.uk/government/publications/keep-britain-working-review-update-a-national-growth-opportunity-september-2026
+- **[05 Oct 2026]** Free careers support now available through Jobcentres  
+  GOV.UK — DWP news — https://www.gov.uk/government/news/free-careers-support-now-available-through-jobcentres
 - **[05 Oct 2026]** Major boost for young people in Rossendale as Youth Hub opens to support them towards work  
   GOV.UK — DWP news — https://www.gov.uk/government/news/major-boost-for-young-people-in-rossendale-as-youth-hub-opens-to-support-them-towards-work
 - **[01 Oct 2026]** New report backs government action to help neurodivergent people succeed at work  
   GOV.UK — DWP news — https://www.gov.uk/government/news/new-report-backs-government-action-to-help-neurodivergent-people-succeed-at-work
 - **[01 Oct 2026]** 750 young people connect with top employers at Birmingham’s first Youth Guarantee Jobs Fair  
   GOV.UK — DWP news — https://www.gov.uk/government/news/750-young-people-connect-with-top-employers-at-birminghams-first-youth-guarantee-jobs-fair
-- **[24 Sep 2026]** Government’s digital employment tools help thousands take the next step into work  
-  GOV.UK — DWP news — https://www.gov.uk/government/news/governments-digital-employment-tools-help-thousands-take-the-next-step-into-work
-- **[22 Sep 2026]** Keep Britain Working review update: a national growth opportunity, September 2026  
-  GOV.UK — Business & Trade news — https://www.gov.uk/government/publications/keep-britain-working-review-update-a-national-growth-opportunity-september-2026
-- **[22 Sep 2026]** Keep Britain Working review update: a national growth opportunity, September 2026  
-  GOV.UK — DWP news — https://www.gov.uk/government/publications/keep-britain-working-review-update-a-national-growth-opportunity-september-2026
 
 ## Appendix — pages crawled
 
 | Page | Status | Words |
 | --- | --- | --- |
-| https://www.prcworkforce.com | 200 | 9111 |
+| https://www.prcworkforce.com | 200 | 9242 |
 | https://www.prcworkforce.com/PRC_Employer_Report_DEMO.html | 200 | 583 |
 | https://www.prcworkforce.com/brief | 200 | 1951 |
 | https://www.prcworkforce.com/demo/demo.html | 200 | 4 |
 | https://www.prcworkforce.com/demo/demo.html?full=1 | 200 | 4 |
 | https://www.prcworkforce.com/disclosures.html | 200 | 1175 |
-| https://www.prcworkforce.com/due-diligence.html | 200 | 7466 |
+| https://www.prcworkforce.com/due-diligence.html | 200 | 7478 |
 | https://www.prcworkforce.com/evidence.html | 200 | 1361 |
 | https://www.prcworkforce.com/fixed.html | 200 | 320 |
 | https://www.prcworkforce.com/leak | 200 | 1406 |
 | https://www.prcworkforce.com/privacy.html | 200 | 1016 |
 | https://www.prcworkforce.com/questions.html | 200 | 1205 |
-| https://www.prcworkforce.com/reach-calculator.html | 200 | 838 |
 | https://www.prcworkforce.com/reporting-methodology.html | 200 | 1314 |
-| https://www.prcworkforce.com/specimen-report.html | 200 | 5924 |
+| https://www.prcworkforce.com/specimen-report-150.html | 200 | 6531 |
+| https://www.prcworkforce.com/specimen-report.html | 200 | 6040 |
+| https://www.prcworkforce.com/specimen-summary.html | 200 | 427 |
+| https://www.prcworkforce.com/usage-calculator.html | 200 | 838 |
 | https://www.prcworkforce.com/value.html | 200 | 4965 |
 | https://www.prcworkforce.com/who-sees-what | 200 | 627 |
